@@ -1,6 +1,6 @@
 ![Unity](https://img.shields.io/badge/Unity-2021.3%2B-black)
 
-[README - 日本語版](README_jp.md)
+## このプラグインは調整中の為、まだご利用できません。
 
 > [!IMPORTANT]
 > 免責事項: このプラグインはオープンソースのサービスであり、[VContainer](https://github.com/hadashiA/VContainer)が提供する公式のサービスではありません。
