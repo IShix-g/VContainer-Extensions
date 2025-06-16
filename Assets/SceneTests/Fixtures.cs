@@ -1,6 +1,7 @@
+
 using System;
 
-namespace VContainer.Tests
+namespace Tests
 {
     public interface I1
     {
