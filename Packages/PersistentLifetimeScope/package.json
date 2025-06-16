@@ -1,0 +1,27 @@
+{
+  "name": "com.ishix.vcontainer.persistentlifetimescope",
+  "version": "1.0.0",
+  "displayName": "Persistent LifetimeScope",
+  "description": "This is a `LifetimeScope` that is initialized only once. It is useful for avoiding running heavy processes multiple times. Additionally, since any instance other than the first initialized one is destroyed, it can be safely placed in all scenes.",
+  "unity": "2021.3",
+  "author": {
+    "name": "IShix",
+    "url": "https://github.com/IShix-g"
+  },
+  "keywords": [
+    "Unity",
+    "VContainer",
+    "Persistent",
+    "Extension"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IShix-g/PersistentLifetimeScope.git"
+  },
+  "url": "https://github.com/IShix-g/PersistentLifetimeScope",
+  "documentationUrl": "https://github.com/IShix-g/PersistentLifetimeScope",
+  "licensesUrl": "https://github.com/IShix-g/PersistentLifetimeScope/blob/master/LICENSE",
+  "samples": [],
+  "dependencies": {}
+}
