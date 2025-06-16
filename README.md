@@ -20,3 +20,5 @@ URL: `https://github.com/IShix-g/VContainer-Extensions.git?path=Packages/Persist
 <img alt="Add package" src="Docs/add_package.png" width="700"/>
 
 ## クラスを書く
+
+https://github.com/IShix-g/VContainer-Extensions/blob/main/Assets/SceneTests/SamplePersistentLifetimeScope.cs
