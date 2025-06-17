@@ -17,11 +17,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/IShix-g/PersistentLifetimeScope.git"
+    "url": "https://github.com/IShix-g/VContainer-Extensions.git"
   },
-  "url": "https://github.com/IShix-g/PersistentLifetimeScope",
-  "documentationUrl": "https://github.com/IShix-g/PersistentLifetimeScope",
-  "licensesUrl": "https://github.com/IShix-g/PersistentLifetimeScope/blob/master/LICENSE",
+  "url": "https://github.com/IShix-g/VContainer-ExtensionsPersistentLifetimeScope",
+  "documentationUrl": "https://github.com/IShix-g/VContainer-Extensions?tab=readme-ov-file#persistentlifetimescope",
+  "licensesUrl": "https://github.com/IShix-g/VContainer-Extensions/blob/master/LICENSE",
   "samples": [],
   "dependencies": {}
 }
