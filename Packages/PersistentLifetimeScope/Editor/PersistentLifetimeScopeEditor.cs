@@ -3,21 +3,21 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using VContainer.Unity.Extensions;
 
-namespace VContainer.Editor.Extensions
+namespace VContainer.Unity.Extensions.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(PersistentLifetimeScopeBase), true)]
     public sealed class PersistentLifetimeScopeEditor : UnityEditor.Editor
     {
+        static readonly string s_autoInjectFieldName = "autoInjectGameObjects";
         static string[] s_lifetimeScopeFields;
-        GameObject _targetObject;
-        int _targetObjectChildCount = -1;
+        GameObject _object;
+        int _objectChildCount = -1;
 
         void OnEnable()
         {
-            _targetObject = ((Component) serializedObject.targetObject).gameObject;
+            _object = ((Component) serializedObject.targetObject).gameObject;
 
             if (s_lifetimeScopeFields != null)
             {
@@ -26,7 +26,7 @@ namespace VContainer.Editor.Extensions
             s_lifetimeScopeFields = typeof(global::VContainer.Unity.LifetimeScope)
                 .GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
                 .Select(field => field.Name)
-                .Where(name => !name.Contains("autoInjectGameObjects"))
+                .Where(name => !name.Contains(s_autoInjectFieldName))
                 .ToArray();
         }
 
@@ -49,13 +49,16 @@ namespace VContainer.Editor.Extensions
                 {
                     var propertyName = property.name;
                     var isDisable = s_lifetimeScopeFields.Contains(propertyName);
-                    var objectsLength = propertyName == "autoInjectGameObjects"
+                    var objectsLength = propertyName == s_autoInjectFieldName
                                             ? property.arraySize
                                             : -1;
                     EditorGUI.BeginDisabledGroup(isDisable);
-                    EditorGUI.BeginChangeCheck();
+                    if (objectsLength >= 0)
+                    {
+                        EditorGUI.BeginChangeCheck();
+                    }
                     EditorGUILayout.PropertyField(property, true);
-                    var isChanged = EditorGUI.EndChangeCheck();
+                    var isChanged = objectsLength >= 0 && EditorGUI.EndChangeCheck();
                     EditorGUI.EndDisabledGroup();
 
                     if (objectsLength < 0)
@@ -63,16 +66,16 @@ namespace VContainer.Editor.Extensions
                         continue;
                     }
 
-                    var currentChildCount = _targetObject.transform.childCount;
+                    var childCount = _object.transform.childCount;
                     if ((property.arraySize <= 0
                          || objectsLength == property.arraySize)
                          && !isChanged
-                         && currentChildCount == _targetObjectChildCount)
+                         && childCount == _objectChildCount)
                     {
                         continue;
                     }
 
-                    _targetObjectChildCount = currentChildCount;
+                    _objectChildCount = childCount;
                     ValidObjects(property);
                 }
             }
@@ -89,12 +92,12 @@ namespace VContainer.Editor.Extensions
                     continue;
                 }
 
-                if (obj != _targetObject
+                if (obj != _object
                     && (obj.transform.parent == null
-                        || obj.transform.parent.gameObject != _targetObject))
+                        || obj.transform.parent.gameObject != _object))
                 {
                     property.DeleteArrayElementAtIndex(i);
-                    Debug.LogError(obj.name + " is not a child of " + _targetObject.name + ". Please make sure to specify either the object itself or one of its children.", obj);
+                    Debug.LogError(obj.name + " is not a child of " + _object.name + ". Please make sure to specify either the object itself or one of its children.", obj);
                 }
             }
         }
