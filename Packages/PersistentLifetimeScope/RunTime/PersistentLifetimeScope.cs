@@ -11,7 +11,7 @@ namespace VContainer.Unity.Extensions
     public abstract class PersistentLifetimeScope<T> : PersistentLifetimeScopeBase where T : PersistentLifetimeScope<T>
     {
         static T s_instance;
-
+        
         protected override void Awake()
         {
             if (s_instance == null)
@@ -37,15 +37,13 @@ namespace VContainer.Unity.Extensions
 
         protected void OnValidate()
         {
-            if (parentReference.Type != null)
-            {
-                Reset();
-            }
+            Reset();
         }
 
         protected virtual void Reset()
         {
             parentReference = default;
+            autoRun = true;
         }
 
         protected override LifetimeScope FindParent()
