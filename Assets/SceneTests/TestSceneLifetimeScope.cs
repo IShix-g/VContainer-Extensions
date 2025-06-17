@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
-using Tests;
+using VContainer;
 
-namespace VContainer.Tests.Unity
+namespace Tests
 {
     public sealed class TestSceneLifetimeScope : LifetimeScope
     {
@@ -33,6 +33,7 @@ namespace VContainer.Tests.Unity
                 var serviceB = container.Resolve<DisposableServiceB>();
                 Assert.IsTrue(s_serviceB == null || s_serviceB == serviceB, "Instance is different.");
                 s_serviceB = serviceB;
+
             });
         }
     }
