@@ -170,6 +170,7 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  _object: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,6 +300,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentReference:
-    TypeName: VContainer.Tests.Unity.SamplePersistentLifetimeScope
+    TypeName: Tests.SamplePersistentLifetimeScope
   autoRun: 1
   autoInjectGameObjects: []

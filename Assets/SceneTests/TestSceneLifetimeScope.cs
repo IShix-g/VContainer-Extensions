@@ -20,7 +20,7 @@ namespace VContainer.Tests.Unity
 
         async Task Reload()
         {
-            Debug.Log("Reloaded count = " + ++s_instanceCount);
+            Debug.Log("Reloadd count = " + ++s_instanceCount);
             await Task.Delay(3000);
             var sceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(sceneName);

@@ -3,6 +3,7 @@ using UnityEngine;
 using NUnit.Framework;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using Tests;
 
 namespace VContainer.Tests.Unity
 {
@@ -12,23 +13,23 @@ namespace VContainer.Tests.Unity
         public IEnumerator Create()
         {
             var parentLifetimeScope = Create<SamplePersistentLifetimeScope>("Parent");
-            
+
             yield return null;
             yield return null;
-            
+
             var parentDisposableA = parentLifetimeScope.Container.Resolve<DisposableServiceA>();
             var parentDisposableB = parentLifetimeScope.Container.Resolve<DisposableServiceB>();
             var childDisposableB = parentLifetimeScope.Container.Resolve<DisposableServiceB>();
-            
+
             Assert.That(parentDisposableB, Is.SameAs(childDisposableB));
-            
+
             // Scene reload
             var sceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(sceneName);
-            
+
             yield return null;
             yield return null;
-            
+
             Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(sceneName));
             Assert.That(parentLifetimeScope, Is.Not.Null);
             Assert.That(parentDisposableA.Disposed, Is.False);
