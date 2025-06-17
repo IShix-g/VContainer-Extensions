@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using VContainer.Unity;
+using Tests;
 
 namespace VContainer.Tests.Unity
 {
@@ -11,12 +12,12 @@ namespace VContainer.Tests.Unity
     {
         static int s_instanceCount;
         static DisposableServiceB s_serviceB;
-        
+
         void Start()
         {
             _ = Reload();
         }
-        
+
         async Task Reload()
         {
             Debug.Log("Reloaded count = " + ++s_instanceCount);
