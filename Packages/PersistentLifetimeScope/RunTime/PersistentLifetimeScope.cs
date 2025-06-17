@@ -50,6 +50,11 @@ namespace VContainer.Unity.Extensions
 
         protected override LifetimeScope FindParent()
         {
+            if (parentReference.Type == null)
+            {
+                return null;
+            }
+
             var objs = FindObjects(parentReference.Type);
             if (objs.Length > 1)
             {
