@@ -19,9 +19,15 @@
     "type": "git",
     "url": "https://github.com/IShix-g/VContainer-Extensions.git"
   },
-  "url": "https://github.com/IShix-g/VContainer-ExtensionsPersistentLifetimeScope",
+  "url": "https://github.com/IShix-g/VContainer-Extensions",
   "documentationUrl": "https://github.com/IShix-g/VContainer-Extensions?tab=readme-ov-file#persistentlifetimescope",
   "licensesUrl": "https://github.com/IShix-g/VContainer-Extensions/blob/master/LICENSE",
-  "samples": [],
+  "samples": [
+    {
+      "displayName": "Mobile Sample",
+      "description": "This is a sample for mobile-specific implementations of persistent lifetime scope.",
+      "path": "Samples~/MobileSample"
+    }
+  ],
   "dependencies": {}
 }

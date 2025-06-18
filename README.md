@@ -5,7 +5,7 @@
 
 # PersistentLifetimeScope
 
-[VContainer](https://github.com/hadashiA/VContainer)に1度のみ初期化(Configure)が呼ばれる`LifetimeScope`を追加します。
+[VContainer](https://github.com/hadashiA/VContainer)に1度のみ初期化(Configure)する`LifetimeScope`を追加します。
 
 ## 特徴
 
@@ -18,6 +18,21 @@
 - 初期化がハイコストな場合、1度のみ初期化する事でパフォーマンスの向上に期待できます
 - モバイル端末のようなパフォーマンスにシビアな環境におすすめです
 
+### 例
+
+
+
+## 使用上の注意
+
+- DontDestroyOnLoadが付与されたオブジェクトなので、アタッチするスクリプトは慎重に判断してください
+- Parentの指定はできません
+
+## サンプル
+
+インストール後、PackageManagerからインポートしてください。
+
+<img src="Docs/sample.jpg" width="650"/>
+
 ## Getting Started
 
 ### Package Managerからインストール
@@ -28,7 +43,7 @@ URL: `https://github.com/IShix-g/VContainer-Extensions.git?path=Packages/Persist
 
 ![](Docs/add_package.png)
 
-### クラスを作成する
+### `LifetimeScope`を作成する
 
 - `PersistentLifetimeScope<T>`を実装
 - シーンにオブジェクトを作って作成したスクリプトをアタッチ
