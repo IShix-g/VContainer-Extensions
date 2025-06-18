@@ -20,7 +20,7 @@ namespace Tests
 
         async Task Reload()
         {
-            Debug.Log("Reloadd count = " + ++s_instanceCount);
+            Debug.Log("Reload count = " + ++s_instanceCount);
             await Task.Delay(3000);
             var sceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(sceneName);
