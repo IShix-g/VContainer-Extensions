@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
-using VContainer.Unity;
 using VContainer;
+using VContainer.Unity.Extensions;
 
 namespace Tests
 {
-    public sealed class TestSceneLifetimeScope : LifetimeScope
+    public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope
     {
         static int s_instanceCount;
         static DisposableServiceB s_serviceB;

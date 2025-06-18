@@ -17,8 +17,14 @@ namespace VContainer.Tests.Unity
             yield return null;
             yield return null;
 
+            var childLifetimeScope = Create<SamplePersistentChildLifetimeScope>("Child");
+
+            yield return null;
+            yield return null;
+
             var parentDisposableA = parentLifetimeScope.Container.Resolve<DisposableServiceA>();
             var parentDisposableB = parentLifetimeScope.Container.Resolve<DisposableServiceB>();
+            var childDisposableA = childLifetimeScope.Container.Resolve<DisposableServiceA>();
             var childDisposableB = parentLifetimeScope.Container.Resolve<DisposableServiceB>();
 
             Assert.That(parentDisposableB, Is.SameAs(childDisposableB));
@@ -31,8 +37,10 @@ namespace VContainer.Tests.Unity
             yield return null;
 
             Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo(sceneName));
-            Assert.That(parentLifetimeScope, Is.Not.Null);
+            Assert.That(parentLifetimeScope != null, Is.True);
+            Assert.That(childLifetimeScope == null, Is.True);
             Assert.That(parentDisposableA.Disposed, Is.False);
+            Assert.That(childDisposableA.Disposed, Is.True);
             Assert.That(parentDisposableB.Disposed, Is.False);
             Assert.That(childDisposableB.Disposed, Is.False);
         }
