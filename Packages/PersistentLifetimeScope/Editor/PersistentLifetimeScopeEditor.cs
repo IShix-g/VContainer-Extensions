@@ -34,6 +34,14 @@ namespace VContainer.Unity.Extensions.Editor
         {
             serializedObject.Update();
             {
+                var style = new GUIStyle(GUI.skin.box)
+                {
+                    alignment = TextAnchor.MiddleCenter,
+                    padding = new RectOffset(0, 0, 5, 5),
+                };
+                GUILayout.Box("Persistent", style, GUILayout.ExpandWidth(true));
+            }
+            {
                 var property = serializedObject.FindProperty("m_Script");
                 if (property != null)
                 {

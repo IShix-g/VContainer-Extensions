@@ -8,10 +8,11 @@ namespace VContainer.Unity.Extensions
     // Generic classes cannot be used in Unity Editor extensions, hence this is necessary
     public abstract class PersistentLifetimeScopeBase : LifetimeScope {}
 
+    [HelpURL("https://github.com/IShix-g/VContainer-Extensions?tab=readme-ov-file#persistentlifetimescope")]
     public abstract class PersistentLifetimeScope<T> : PersistentLifetimeScopeBase where T : PersistentLifetimeScope<T>
     {
         static T s_instance;
-        
+
         protected override void Awake()
         {
             if (s_instance == null)
