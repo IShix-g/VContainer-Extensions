@@ -6,18 +6,25 @@ namespace VContainer.Unity.Extensions
     {
         static T s_instance;
 
+        /// <summary>
+        /// This block is executed only once and is executed before the initialization of the LifetimeScope.
+        /// </summary>
         protected virtual void OnInitialize() {}
+        /// <summary>
+        /// This block is executed every time Awake() is called and runs before the initialization of the LifetimeScope.
+        /// </summary>
+        /// <param name="instance"></param>
         protected virtual void OnEveryAwake(T instance){}
 
         protected override void Awake()
         {
             if (s_instance == null)
             {
-                base.Awake();
                 s_instance = (T) this;
                 DontDestroyOnLoad(gameObject);
                 OnInitialize();
                 OnEveryAwake(s_instance);
+                base.Awake();
             }
             else if (s_instance != this)
             {

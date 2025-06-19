@@ -8,12 +8,12 @@ namespace PersistentLifetimeScope.MobileSample
     {
         protected override void OnInitialize()
         {
-            // This block runs only once
+            // This block is executed only once and is executed before the initialization of the LifetimeScope.
         }
 
         protected override void OnEveryAwake(AppLifetimeScope instance)
         {
-            // This block runs every time Awake() is called
+            // This block is executed every time Awake() is called and runs before the initialization of the LifetimeScope.
         }
 
         protected override void Configure(IContainerBuilder builder)

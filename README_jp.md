@@ -64,17 +64,18 @@ public sealed class AppLifetimeScope : PersistentLifetimeScope<SamplePersistentL
 {
     protected override void OnInitialize()
     {
-        // This block runs only once
+        // このブロックは1度のみ実行されます。
+        // LifetimeScopeの初期化より先に実行されます。
     }
 
     protected override void OnEveryAwake(AppLifetimeScope instance)
     {
-        // This block runs every time Awake() is called
+        // このブロックはシーンを遷移する度に呼ばれます。
     }
 
     protected override void Configure(IContainerBuilder builder)
     {
-        // This block runs only once
+        // このブロックは1度のみ実行されます。
         builder.Register<AdsService>(Lifetime.Singleton);
         builder.Register<IDataRepository, PersistentDataRepository>(Lifetime.Singleton);
     }
