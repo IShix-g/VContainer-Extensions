@@ -1,13 +1,31 @@
 #if ENABLE_VCONTAINER
-using System;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace VContainer.Unity.Extensions
 {
-    [HelpURL("https://github.com/IShix-g/VContainer-Extensions?tab=readme-ov-file#persistentlifetimescope")]
-    public abstract class PersistentChildLifetimeScope : LifetimeScope
+    public abstract class PersistentChildLifetimeScope : PersistentChildLifetimeScopeBase {}
+
+    public abstract class PersistentChildLifetimeScope<T> : PersistentChildLifetimeScopeBase where T : PersistentLifetimeScope<T>
     {
+        protected void OnValidate()
+        {
+            if (parentReference.Type != typeof(T))
+            {
+                Reset();
+            }
+        }
+
+        protected virtual void Reset()
+        {
+            parentReference = ParentReference.Create<T>();
+            autoRun = true;
+        }
+    }
+
+    [HelpURL("https://github.com/IShix-g/VContainer-Extensions?tab=readme-ov-file#persistentlifetimescope")]
+    public abstract class PersistentChildLifetimeScopeBase : LifetimeScope
+    {
+#if UNITY_2020_3 || UNITY_2021_3 || UNITY_2022_2 || UNITY_2022_3_OR_NEWER
         protected override LifetimeScope FindParent()
         {
             if (parentReference.Type == null)
@@ -15,7 +33,11 @@ namespace VContainer.Unity.Extensions
                 return null;
             }
 
-            var objs = FindObjects(parentReference.Type);
+            var objs = FindObjectsByType(
+                parentReference.Type,
+                FindObjectsInactive.Exclude,
+                FindObjectsSortMode.None
+            );
             if (objs.Length > 1)
             {
                 foreach (var obj in objs)
@@ -36,15 +58,7 @@ namespace VContainer.Unity.Extensions
             }
             return null;
         }
-
-        static Object[] FindObjects(Type type)
-        {
-#if UNITY_2022_1_OR_NEWER
-            return FindObjectsByType(type, FindObjectsInactive.Exclude, FindObjectsSortMode.None);
-#else
-            return FindObjectsOfType(type);
 #endif
-        }
     }
 }
 #endif
