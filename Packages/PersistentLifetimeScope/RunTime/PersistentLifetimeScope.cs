@@ -7,6 +7,7 @@ namespace VContainer.Unity.Extensions
         static T s_instance;
 
         protected virtual void OnInitialize() {}
+        protected virtual void OnEveryAwake(T instance){}
 
         protected override void Awake()
         {
@@ -16,9 +17,11 @@ namespace VContainer.Unity.Extensions
                 s_instance = (T) this;
                 DontDestroyOnLoad(gameObject);
                 OnInitialize();
+                OnEveryAwake(s_instance);
             }
             else if (s_instance != this)
             {
+                OnEveryAwake(s_instance);
                 Destroy(gameObject);
             }
         }

@@ -95,10 +95,23 @@ public sealed class AppLifetimeScope : PersistentLifetimeScope<SamplePersistentL
 using VContainer;
 using VContainer.Unity.Extensions;
 
-public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope
+public sealed class AppLifetimeScope : PersistentLifetimeScope<SamplePersistentLifetimeScope>
 {
+    protected override void OnInitialize()
+    {
+        // This block runs only once
+    }
+
+    protected override void OnEveryAwake(AppLifetimeScope instance)
+    {
+        // This block runs every time Awake() is called
+    }
+
     protected override void Configure(IContainerBuilder builder)
     {
+        // This block runs only once
+        builder.Register<AdsService>(Lifetime.Singleton);
+        builder.Register<IDataRepository, PersistentDataRepository>(Lifetime.Singleton);
     }
 }
 ```
