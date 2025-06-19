@@ -36,7 +36,7 @@ namespace VContainer.Unity.Extensions.Editor
                 while (property.NextVisible(false))
                 {
                     var propertyName = property.name;
-                    var isDisable = propertyName == "parent" || propertyName == "autoRun";
+                    var isDisable = propertyName == "parentReference" || propertyName == "autoRun";
                     EditorGUI.BeginDisabledGroup(isDisable);
                     EditorGUILayout.PropertyField(property, true);
                     EditorGUI.EndDisabledGroup();

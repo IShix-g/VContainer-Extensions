@@ -4,7 +4,7 @@ using VContainer.Unity.Extensions;
 
 namespace PersistentLifetimeScope.MobileSample
 {
-    public sealed class SampleSceneLifetimeScope : PersistentChildLifetimeScope
+    public sealed class SampleSceneLifetimeScope : PersistentChildLifetimeScope<PersistentLifetimeScope.MobileSample.AppLifetimeScope>
     {
         protected override void Configure(IContainerBuilder builder)
         {
