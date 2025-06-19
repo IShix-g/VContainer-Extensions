@@ -6,6 +6,8 @@ namespace VContainer.Unity.Extensions
     {
         static T s_instance;
 
+        protected virtual void OnInitialize() {}
+
         protected override void Awake()
         {
             if (s_instance == null)
@@ -13,6 +15,7 @@ namespace VContainer.Unity.Extensions
                 base.Awake();
                 s_instance = (T) this;
                 DontDestroyOnLoad(gameObject);
+                OnInitialize();
             }
             else if (s_instance != this)
             {
