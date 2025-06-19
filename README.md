@@ -1,47 +1,57 @@
+[README - 日本語版](README_jp.md)
+
 ![Unity](https://img.shields.io/badge/Unity-2021.3%2B-black)
 
 > [!IMPORTANT]
-> 免責事項: このプラグインはオープンソースのサービスであり、[VContainer](https://github.com/hadashiA/VContainer)が提供する公式のサービスではありません。
+> Disclaimer: This plugin is an open source service and is not an official service provided
+> by [VContainer](https://github.com/hadashiA/VContainer).
 
 # PersistentLifetimeScope
 
-[VContainer](https://github.com/hadashiA/VContainer)に1度のみ初期化(Configure)する`LifetimeScope`を追加します。
+Adds a `LifetimeScope` to [VContainer](https://github.com/hadashiA/VContainer) that is initialized (Configured) only
+once.
 
-## 特徴
+## Features
 
-- 1度しか初期化が走らないので、シーンを遷移しても消えません
-- 複数のシーンに設置可能。重複する場合は削除され最初に初期化した1つのみに保たれます
+- Since initialization only happens once, it persists across scene transitions
+- Can be placed in multiple scenes. If duplicates exist, they are removed and only the first initialized one is kept
 
-## 必要な理由
+## Why Use It
 
-- 1度しか初期化が走らない処理を実装したい場合に有用
-- 初期化がハイコストな場合、1度のみ初期化する事でパフォーマンスの向上に期待できます
-- モバイル端末のようなパフォーマンスにシビアな環境におすすめです
+- Useful when you want to implement processes that should only be initialized once
+- When initialization is costly, performing it only once can improve performance
+- Recommended for performance-sensitive environments like mobile devices
 
-## 使用上の注意
+## Usage Notes
 
-- DontDestroyOnLoadが付与されたオブジェクトなので、アタッチするスクリプトは慎重に判断してください
-- `PersistentLifetimeScope`を親に設定したい場合、必ず`PersistentChildLifetimeScope`を使用してください
+- Since DontDestroyOnLoad is applied to the object, carefully consider which scripts to attach
+- When setting a `PersistentLifetimeScope` as a parent, always use `PersistentChildLifetimeScope`
 
-## 使用例
+## Usage Example
 
 ![](Docs/sample2.jpg)
 
-### 重い初期化を軽いシーンで終わらせる
-例えば、ゲーム全体で使用する`AppLifetimeScope`を作ります。それをタイトルシーンで初期化する事で、**軽いシーンで重い初期化を終わらせる事ができます。** そして、この`AppLifetimeScope`はシーンを遷移しても消えないので再度重い初期化をする必要が無くなります。
+### Complete Heavy Initialization in a Light Scene
 
-### 全シーンに設置してください
-必ず全シーンに設置してほしいです。そうする事で、開発段階でどのシーンから再生しても`AppLifetimeScope`の初期化が走ります。もちろん重複の心配はありません。一番初めに初期化されたもののみ使用され、その他は破棄されます。
+For example, create an `AppLifetimeScope` used throughout the game. By initializing it in the title scene, **you can
+complete heavy initialization in a light scene.** Since this `AppLifetimeScope` persists across scene transitions,
+there's no need to perform heavy initialization again.
 
-## サンプル
+### Place in All Scenes
 
-インストール後、PackageManagerからインポートしてシーンを再生して試してみてください。
+Please place it in all scenes. This ensures that `AppLifetimeScope` initialization occurs regardless of which scene you
+start from during development. There's no need to worry about duplication. Only the first initialized instance is used,
+and others are destroyed.
+
+## Sample
+
+After installation, import from Package Manager and try running the scene.
 
 <img src="Docs/sample.jpg" width="650"/>
 
 ## Getting Started
 
-### Package Managerからインストール
+### Install from Package Manager
 
 "Unity Editor : Window > Package Manager > Add package from git URL...".
 
@@ -49,13 +59,13 @@ URL: `https://github.com/IShix-g/VContainer-Extensions.git?path=Packages/Persist
 
 ![](Docs/add_package.png)
 
-### `PersistentLifetimeScope`を作成する
+### Creating a `PersistentLifetimeScope`
 
-- `PersistentLifetimeScope<T>`を実装
-- シーンにオブジェクトを作って作成したスクリプトをアタッチ
+- Implement `PersistentLifetimeScope<T>`
+- Create an object in the scene and attach the implemented script to it
 
-#### [使用上の注意]
-DontDestroyOnLoadが付与されたオブジェクトなので、アタッチするスクリプトは慎重に判断してください
+#### [Caution]
+Since this object uses DontDestroyOnLoad, carefully consider which script you attach to it.
 
 ```csharp
 using VContainer;
@@ -74,14 +84,14 @@ public sealed class AppLifetimeScope : PersistentLifetimeScope<SamplePersistentL
 
 <img src="Docs/inspector.jpg" width="650"/>
 
-### `PersistentChildLifetimeScope`を作成する
+### Creating a `PersistentChildLifetimeScope`
 
-- `PersistentChildLifetimeScope` またはそのジェネリック版を実装
-- シーンにオブジェクトを作って作成したスクリプトをアタッチ
+- Implement `PersistentChildLifetimeScope` or a generic version of it
+- Create an object in the scene and attach the implemented script to it
 
-#### [使用上の注意]
-- `PersistentLifetimeScope`を親に設定したい`LifetimeScope`で`PersistentChildLifetimeScope`を使用してください
-- `PersistentChildLifetimeScope`はDontDestroyOnLoadではなく普通の`LifetimeScope`です
+#### [Caution]
+- Use `PersistentChildLifetimeScope` for any `LifetimeScope` that you want configured as a child of a `PersistentLifetimeScope`.
+- Note that `PersistentChildLifetimeScope` behaves like a normal `LifetimeScope` and does **not** utilize DontDestroyOnLoad.
 
 ```csharp
 using VContainer;
@@ -95,7 +105,7 @@ public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope
 }
 ```
 
-親になる`PersistentLifetimeScope`をGenericで指定できます。
+You can specify the parent `PersistentLifetimeScope` using a Generic.
 
 ```csharp
 using VContainer;
