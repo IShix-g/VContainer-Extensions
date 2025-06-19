@@ -33,9 +33,7 @@ once.
 
 ### Complete Heavy Initialization in a Light Scene
 
-For example, create an `AppLifetimeScope` used throughout the game. By initializing it in the title scene, **you can
-complete heavy initialization in a light scene.** Since this `AppLifetimeScope` persists across scene transitions,
-there's no need to perform heavy initialization again.
+For example, you can create an `AppLifetimeScope` to be used throughout the entire game. By initializing it in a lightweight scene, such as the title screen, you can complete heavy initialization processes in a less resource-intensive environment. Additionally, since this `AppLifetimeScope` persists across scene transitions, the heavy initialization won't run again after changing scenes.
 
 ### Place in All Scenes
 
