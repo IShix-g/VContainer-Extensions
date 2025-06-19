@@ -18,18 +18,24 @@
 - 初期化がハイコストな場合、1度のみ初期化する事でパフォーマンスの向上に期待できます
 - モバイル端末のようなパフォーマンスにシビアな環境におすすめです
 
-### 例
-
-
-
 ## 使用上の注意
 
 - DontDestroyOnLoadが付与されたオブジェクトなので、アタッチするスクリプトは慎重に判断してください
-- Parentの指定はできません
+- `PersistentLifetimeScope`を親に設定したい場合、必ず`PersistentChildLifetimeScope`を使用してください
+
+## 使用例
+
+![](Docs/sample2.jpg)
+
+### 重い初期化を軽いシーンで終わらせる
+例えば、ゲーム全体で使用する`AppLifetimeScope`を作ります。それをタイトルシーンで初期化する事で、軽いシーンで重い初期化を終わらせる事ができます。そして、この`AppLifetimeScope`はシーンを遷移しても消えないので再度重い初期化をする必要が無くなります。
+
+### 全シーンに設置してください
+必ず全シーンに設置してほしいです。そうする事で、開発段階でどこのシーンから再生しても`AppLifetimeScope`の初期化が走ります。もちろん重複の心配はありません。一番初めに初期化されたもののみ使用され、その他は破棄されます。
 
 ## サンプル
 
-インストール後、PackageManagerからインポートしてください。
+インストール後、PackageManagerからインポートしてシーンを再生して試してみてください。
 
 <img src="Docs/sample.jpg" width="650"/>
 
@@ -43,10 +49,13 @@ URL: `https://github.com/IShix-g/VContainer-Extensions.git?path=Packages/Persist
 
 ![](Docs/add_package.png)
 
-### `LifetimeScope`を作成する
+### `PersistentLifetimeScope`を作成する
 
 - `PersistentLifetimeScope<T>`を実装
 - シーンにオブジェクトを作って作成したスクリプトをアタッチ
+
+#### [使用上の注意]
+DontDestroyOnLoadが付与されたオブジェクトなので、アタッチするスクリプトは慎重に判断してください
 
 ```csharp
 using VContainer;
@@ -64,3 +73,38 @@ public sealed class AppLifetimeScope : PersistentLifetimeScope<SamplePersistentL
 ```
 
 <img src="Docs/inspector.jpg" width="650"/>
+
+### `PersistentChildLifetimeScope`を作成する
+
+- `PersistentChildLifetimeScope` またはそのジェネリック版を実装
+- シーンにオブジェクトを作って作成したスクリプトをアタッチ
+
+#### [使用上の注意]
+- `PersistentLifetimeScope`を親に設定したい`LifetimeScope`で`PersistentChildLifetimeScope`を使用してください
+- `PersistentChildLifetimeScope`はDontDestroyOnLoadではなく普通の`LifetimeScope`です
+
+```csharp
+using VContainer;
+using VContainer.Unity.Extensions;
+
+public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope
+{
+    protected override void Configure(IContainerBuilder builder)
+    {
+    }
+}
+```
+
+親になる`PersistentLifetimeScope`をGenericで指定できます。
+
+```csharp
+using VContainer;
+using VContainer.Unity.Extensions;
+
+public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope<AppLifetimeScope>
+{
+    protected override void Configure(IContainerBuilder builder)
+    {
+    }
+}
+```

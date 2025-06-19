@@ -8,7 +8,7 @@ using VContainer.Unity.Extensions;
 
 namespace Tests
 {
-    public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope
+    public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope<SamplePersistentLifetimeScope>
     {
         static int s_instanceCount;
         static DisposableServiceB s_serviceB;

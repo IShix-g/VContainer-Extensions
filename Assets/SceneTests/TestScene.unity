@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 243508525}
   - component: {fileID: 243508526}
   m_Layer: 0
-  m_Name: SampleSingletonLifetimeScope
+  m_Name: SamplePersistentLifetimeScope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -172,7 +172,6 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 243508524}
-  _object: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
