@@ -52,6 +52,7 @@ URL: `https://github.com/IShix-g/VContainer-Extensions.git?path=Packages/Persist
 
 - `PersistentLifetimeScope<T>`を実装
 - シーンにオブジェクトを作って作成したスクリプトをアタッチ
+- Prefab化して全シーンに設置
 
 #### [使用上の注意]
 DontDestroyOnLoadが付与されたオブジェクトなので、アタッチするスクリプトは慎重に判断してください

@@ -96,6 +96,7 @@ public sealed class AppLifetimeScope : PersistentLifetimeScope<SamplePersistentL
 
 - Implement `PersistentChildLifetimeScope` or a generic version of it
 - Create an object in the scene and attach the implemented script to it
+- Create a prefab and place it in all scenes
 
 #### [Caution]
 - Use `PersistentChildLifetimeScope` for any `LifetimeScope` that you want configured as a child of a `PersistentLifetimeScope`.
