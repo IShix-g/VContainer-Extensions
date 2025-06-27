@@ -119,3 +119,52 @@ public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope<AppLif
     }
 }
 ```
+
+## `Root Lifetime Scope` との違い
+
+VContainerには[`Root Lifetime Scope`](https://vcontainer.hadashikick.jp/scoping/project-root-lifetimescope)という機能があります。こちらもDontDestroyOnLoadが付与された`Lifetime Scope`で、この`Persistent Lifetime Scope`と同じ特徴を持ちます。**違いは生成方法です。** 生成方法の違いで何が変わるかを解説します。
+
+### 生成方法の違い
+
+- [`Root Lifetime Scope`] ゲーム起動時に自動的に生成/初期化
+- [`Persistent Lifetime Scope`] 自身でHierarchyに設置。シーン表示時に初期化
+
+### [違い1] 自動生成だとシーンを選べない
+
+`Root Lifetime Scope`の自動生成/初期化はとても便利ですが、生成するシーンを選べません。例えば、テストシーンでも、Test RunnerのPlayModeテストでも生成されます。どのシーンでも常に本番用の`Root Lifetime Scope`を意識する必要があります。
+
+### [違い2] 自動生成は再生されるまで分からない
+
+`Root Lifetime Scope`は、再生するまで設定されているか分かりません。`Persistent Lifetime Scope`なら自身で設置するのでHierarchyで判断できます。
+
+### [違い3] `Persistent Lifetime Scope`は自分で設置する必要がある
+
+逆に`Persistent Lifetime Scope`は手動でシーンに設置する必要があります。また、どのシーンから再生しても問題無いように本番で使用するすべてのシーンに設置するのが理想です。手間はありますが、Hierarchyで判断できるのはメリットです。
+
+### [違い4] `Persistent Lifetime Scope`はシーン上の参照を利用できる
+
+`Persistent Lifetime Scope`は、シーンに設置する特性上シーンのオブジェクトの参照を利用できます。  
+例えば下記のコードは、汎用的に利用されるダイアログの親となる`Canvas`を設定するサンプルです。
+
+```csharp
+using UnityEngine;
+using VContainer;
+using VContainer.Unity.Extensions;
+
+public sealed class AppLifetimeScope : PersistentLifetimeScope<AppLifetimeScope>
+{
+    [SerializeField] Canvas _canvas;
+
+    // This block is executed every time Awake() is called.
+    protected override void OnEveryAwake(AppLifetimeScope instance)
+    {
+        // Set references to the already existing instance
+        instance._canvas = _canvas;
+        Dialog.SetParent(_canvas);
+        if (_canvas == null)
+        {
+            Debug.LogWarning("Canvas is not set");
+        }
+    }
+}
+```

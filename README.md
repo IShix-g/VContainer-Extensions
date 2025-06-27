@@ -127,3 +127,60 @@ public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope<AppLif
     }
 }
 ```
+
+## Differences from `Root Lifetime Scope`
+
+VContainer has a [`Root Lifetime Scope`](https://vcontainer.hadashikick.jp/scoping/project-root-lifetimescope) feature.
+Like the `Persistent Lifetime Scope`, it has DontDestroyOnLoad applied and shares similar characteristics. **The key
+difference is in how they are created.** Let's explore what changes due to these different creation methods.
+
+### Creation Method Differences
+
+- [`Root Lifetime Scope`] Automatically generated/initialized at game startup
+- [`Persistent Lifetime Scope`] Manually placed in Hierarchy, initialized when scene is loaded
+
+### [Difference 1] Auto-generation Cannot Choose Scenes
+
+While `Root Lifetime Scope`'s automatic generation/initialization is convenient, you cannot choose which scene it
+generates in. For example, it will be generated in test scenes and PlayMode tests. You need to be mindful of the
+production `Root Lifetime Scope` in every scene.
+
+### [Difference 2] Auto-generation Status Unknown Until Play
+
+With `Root Lifetime Scope`, you cannot tell if it's configured until you enter play mode. With
+`Persistent Lifetime Scope`, you can verify it in the Hierarchy since you place it manually.
+
+### [Difference 3] `Persistent Lifetime Scope` Requires Manual Placement
+
+Conversely, `Persistent Lifetime Scope` must be manually placed in scenes. Ideally, it should be placed in all
+production scenes to work properly regardless of which scene you start from. While this requires more effort, being able
+to verify in the Hierarchy is beneficial.
+
+### [Difference 4] `Persistent Lifetime Scope` Can Use Scene References
+
+Due to being placed in scenes, `Persistent Lifetime Scope` can utilize references to scene objects.  
+For example, below is a sample code that sets up a `Canvas` to be used as a parent for generic dialogs.
+
+
+```csharp
+using UnityEngine;
+using VContainer;
+using VContainer.Unity.Extensions;
+
+public sealed class AppLifetimeScope : PersistentLifetimeScope<AppLifetimeScope>
+{
+    [SerializeField] Canvas _canvas;
+
+    // This block is executed every time Awake() is called.
+    protected override void OnEveryAwake(AppLifetimeScope instance)
+    {
+        // Set references to the already existing instance
+        instance._canvas = _canvas;
+        Dialog.SetParent(_canvas);
+        if (_canvas == null)
+        {
+            Debug.LogWarning("Canvas is not set");
+        }
+    }
+}
+```~~~~~~~~~~~~
