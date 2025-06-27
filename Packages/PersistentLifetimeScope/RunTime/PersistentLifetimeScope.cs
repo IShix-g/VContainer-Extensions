@@ -11,7 +11,7 @@ namespace VContainer.Unity.Extensions
         /// </summary>
         protected virtual void OnInitialize() {}
         /// <summary>
-        /// This block is executed every time Awake() is called and runs before the initialization of the LifetimeScope.
+        /// This block is executed every time Awake() is called.
         /// </summary>
         /// <param name="instance"></param>
         protected virtual void OnEveryAwake(T instance){}
