@@ -44,7 +44,9 @@
 
 "Unity Editor : Window > Package Manager > Add package from git URL...".
 
-URL: `https://github.com/IShix-g/VContainer-Extensions.git?path=Packages/PersistentLifetimeScope`
+```
+https://github.com/IShix-g/VContainer-Extensions.git?path=Packages/PersistentLifetimeScope
+```
 
 ![](Docs/add_package.png)
 
