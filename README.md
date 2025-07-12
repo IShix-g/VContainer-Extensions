@@ -71,14 +71,14 @@ Since this object uses DontDestroyOnLoad, carefully consider which script you at
 using VContainer;
 using VContainer.Unity.Extensions;
 
-public sealed class AppLifetimeScope : PersistentLifetimeScope<SamplePersistentLifetimeScope>
+public sealed class SamplePersistentLifetimeScope : PersistentLifetimeScope<SamplePersistentLifetimeScope>
 {
     protected override void OnInitialize()
     {
         // This block is executed only once and is executed before the initialization of the LifetimeScope.
     }
 
-    protected override void OnEveryAwake(AppLifetimeScope instance)
+    protected override void OnEveryAwake(SamplePersistentLifetimeScope instance)
     {
         // This block is executed every time Awake() is called and runs before the initialization of the LifetimeScope.
     }
@@ -122,7 +122,7 @@ You can specify the parent `PersistentLifetimeScope` using a Generic.
 using VContainer;
 using VContainer.Unity.Extensions;
 
-public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope<AppLifetimeScope>
+public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope<SamplePersistentLifetimeScope>
 {
     protected override void Configure(IContainerBuilder builder)
     {

@@ -63,7 +63,7 @@ DontDestroyOnLoadが付与されたオブジェクトなので、アタッチす
 using VContainer;
 using VContainer.Unity.Extensions;
 
-public sealed class AppLifetimeScope : PersistentLifetimeScope<SamplePersistentLifetimeScope>
+public sealed class SamplePersistentLifetimeScope : PersistentLifetimeScope<SamplePersistentLifetimeScope>
 {
     protected override void OnInitialize()
     {
@@ -71,7 +71,7 @@ public sealed class AppLifetimeScope : PersistentLifetimeScope<SamplePersistentL
         // LifetimeScopeの初期化より先に実行されます。
     }
 
-    protected override void OnEveryAwake(AppLifetimeScope instance)
+    protected override void OnEveryAwake(SamplePersistentLifetimeScope instance)
     {
         // このブロックはシーンを遷移する度に呼ばれます。
     }
@@ -114,7 +114,7 @@ public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope
 using VContainer;
 using VContainer.Unity.Extensions;
 
-public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope<AppLifetimeScope>
+public sealed class TestSceneLifetimeScope : PersistentChildLifetimeScope<SamplePersistentLifetimeScope>
 {
     protected override void Configure(IContainerBuilder builder)
     {
